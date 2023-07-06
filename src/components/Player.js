@@ -1,8 +1,18 @@
-import { React, useState } from "react"
-import { ArrowPathRoundedSquareIcon, BackwardIcon, ForwardIcon, HeartIcon, PlayIcon, QueueListIcon } from '@heroicons/react/24/outline'
+import { React, useState, useEffect } from "react"
+import { ArrowPathRoundedSquareIcon, BackwardIcon, ForwardIcon, HeartIcon, PlayIcon, PauseIcon, QueueListIcon } from '@heroicons/react/24/outline'
 
 export default function Player() {
-    // const [playButton, setPlayButton] = useState(false);
+    let IconHolder = PlayIcon;
+    const [playButton, setPlayButton] = useState(1);
+
+    useEffect(()=>{
+        if(playButton%2 === 0){
+            //Send play post request to API
+        }else{
+            // Send pause post request to API
+        }
+    },[playButton])
+
     const favorite = () => {
         alert("Favorite button was clicked")
     }
@@ -12,7 +22,7 @@ export default function Player() {
     }
 
     const play = () => {
-        alert("Play button was clicked")
+        //alert("Play")
     }
 
     const forward = () => {
@@ -34,9 +44,6 @@ export default function Player() {
                     <img src="https://w0.peakpx.com/wallpaper/574/25/HD-wallpaper-amoled-astronaut-929-abstract-dark-minimal-q-simple-space-theme.jpg" alt="Album Cover" class="w-3/6 rounded-xl" />
                     <p class="-translate-y-10 w-3/6 text-center break-words">The Edge of Space</p>
                 </div>
-                {/* <audio id="song" class="block w-full max-w-md mx-auto" controls>
-                    <source src="https://open.spotify.com/track/7DE0I3buHcns00C0YEsYsY?si=5e0442c12f514f04" type="audio/mpeg" />
-                </audio> */}
                 <div class="flex flex-row">
                     <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={favorite}>
                         <HeartIcon className="h-6 w-6 text-white" aria-hidden="true" />
@@ -44,8 +51,8 @@ export default function Player() {
                     <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={backward}>
                         <BackwardIcon className="h-6 w-6 text-white" aria-hidden="true" />
                     </div>
-                    <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={play}>
-                        <PlayIcon className="h-6 w-6 text-white" aria-hidden="true" />
+                    <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={()=>setPlayButton(playButton+1)}>
+                        {playButton%2 === 0 ? <PauseIcon className="h-6 w-6 text-white" aria-hidden="true" /> : <PlayIcon className="h-6 w-6 text-white" aria-hidden="true" />}
                     </div>
                     <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={forward}>
                         <ForwardIcon className="h-6 w-6 text-white" aria-hidden="true" />
