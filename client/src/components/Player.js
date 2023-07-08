@@ -5,6 +5,19 @@ import { ArrowPathRoundedSquareIcon, BackwardIcon, ForwardIcon, HeartIcon, PlayI
 export default function Player() {
     const [IconHolder, setIconHolder] = useState(PlayIcon)
     const [playButton, setPlayButton] = useState(1);
+    const [currentSong, setCurrentSong] = useState("");
+
+    useEffect(() => {
+        fetch(`${payload.proxy}/song`)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            const {artist, lyrics, title, track} = data
+            setCurrentSong(track)
+            console.log(currentSong)
+        })
+    }, [currentSong])
 
     useEffect(()=>{
         if(playButton%2 === 0){
@@ -12,13 +25,6 @@ export default function Player() {
             //console.log(payload)
 
             //Send play post request to API
-            fetch(`${payload.proxy}/song`)
-            .then(response => {
-              console.log(response)
-            })
-            .then(data => {
-              //setUsers(data)
-            })
         }else{
             // Send pause post request to API
             setIconHolder(PlayIcon)
@@ -56,6 +62,9 @@ export default function Player() {
                     <img src="https://w0.peakpx.com/wallpaper/574/25/HD-wallpaper-amoled-astronaut-929-abstract-dark-minimal-q-simple-space-theme.jpg" alt="Album Cover" class="w-3/6 rounded-xl" />
                     <p class="-translate-y-10 w-3/6 text-center break-words">The Edge of Space</p>
                 </div>
+                <audio id="song" class="block w-full max-w-md mx-auto" controls>
+                    <source src={currentSong} type="audio/mpeg" />
+                </audio>
                 <div class="flex flex-row">
                     <div className="left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-slate-950 mx-1 cursor-pointer" onClick={favorite}>
                         <HeartIcon className="h-6 w-6 text-white" aria-hidden="true" />
